@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉  G's Birthday Party Celebration! 🎈</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="confetti"></div>
+    <div class="fireworks"></div>
+    
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="birthday-title glitch" data-text="🐼 You're Invited! 🐼">🐼 You're Invited! 🐼</h1>
+            <div class="age-badge">
+                <span class="number">4</span>
+                <div class="sparkle sparkle-1">✨</div>
+                <div class="sparkle sparkle-2">⭐</div>
+                <div class="sparkle sparkle-3">💫</div>
+                <div class="sparkle sparkle-4">✨</div>
+            </div>
+            <p class="subtitle pulse">Join us for a PANDA RESCUE Birthday Party!</p>
+           
+            <button class="cta-btn" onclick="document.querySelector('.party-details').scrollIntoView({behavior: 'smooth'})">
+                🎯 See Party Details 🎯
+            </button>
+        </div>
+        <div class="balloons">
+            <div class="balloon balloon-1">🐼</div>
+            <div class="balloon balloon-2">🚒</div>
+            <div class="balloon balloon-3">🚔</div>
+            <div class="balloon balloon-4">🐼</div>
+            <div class="balloon balloon-5">🎈</div>
+            <div class="balloon balloon-6">🎉</div>
+        </div>
+        <canvas id="heroCanvas"></canvas>
+    </header>
+
+    <!-- Countdown Timer -->
+    <section class="countdown-section">
+        <div class="container">
+            <h2 class="countdown-title">⏰ Party Countdown ⏰</h2>
+            <div id="countdown" class="countdown">
+                <div class="countdown-item">
+                    <span id="days" class="countdown-number">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="hours" class="countdown-number">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="minutes" class="countdown-number">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds" class="countdown-number">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Party Details Section -->
+    <section class="party-details">
+        <div class="container">
+            <h2 class="section-title">🚨 Party Details 🚨</h2>
+            <div class="details-grid">
+                <div class="detail-card" data-tilt>
+                    <div class="icon rotate-on-hover">📅</div>
+                    <h3>Date</h3>
+                    <p>Saturday, January 17th, 2026</p>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="detail-card" data-tilt>
+                    <div class="icon rotate-on-hover">⏰</div>
+                    <h3>Time</h3>
+                    <p>4:30 PM</p>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="detail-card" data-tilt>
+                    <div class="icon rotate-on-hover">📍</div>
+                    <h3>Location</h3>
+                    <p>Pump It Up Frisco<br>7164 Technology Dr Ste 200<br>Frisco, TX 75034</p>
+                    <a href="https://maps.google.com/?q=7164+Technology+Dr+Ste+200+Frisco+TX+75034" target="_blank" class="map-link">View on Map 🗺️</a>
+                    <div class="card-glow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fun Activities Section -->
+    <section class="activities">
+        <div class="container">
+            <h2 class="section-title">🎮 What to Expect 🎮</h2>
+            <div class="activities-grid">
+                <div class="activity-card">
+                    <div class="activity-icon">🏃</div>
+                    <h3>Bouncy Fun</h3>
+                    <p>Jump, bounce, and play in our awesome inflatables!</p>
+                </div>
+                <div class="activity-card">
+                    <div class="activity-icon">🍕</div>
+                    <h3>Yummy Food</h3>
+                    <p>Pizza, snacks, and birthday cake for everyone!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wishlist Section -->
+    <section class="wishlist">
+        <div class="container">
+            <h2 class="section-title">🐼 Birthday Wishlist 🚒</h2>
+            <p class="wishlist-intro">Your presence is the best present! But if you'd like to bring a gift, here are the registries:</p>
+            <div class="wishlist-grid">
+                <div class="wishlist-item" data-tilt>
+                    <div class="wishlist-icon bounce-on-hover">🎯</div>
+                    <h3>Target Registry</h3>
+                    <a href="https://www.target.com/gift-registry/gift/BabyGG5" target="_blank" class="wishlist-link">View Target Registry</a>
+                </div>
+                <div class="wishlist-item" data-tilt>
+                    <div class="wishlist-icon bounce-on-hover">📦</div>
+                    <h3>Amazon Registry</h3>
+                    <a href="https://www.amazon.com/registries/gl/guest-view/LW0V9NEIIE22?ref_=cm_sw_r_apin_ggr-subnav-share_H71VF808H2ZYQB2RC1H2&language=en-US" target="_blank" class="wishlist-link">View Amazon Registry</a>
+                </div>
+                <div class="wishlist-item" data-tilt>
+                    <div class="wishlist-icon bounce-on-hover">🎁</div>
+                    <h3>MyRegistry</h3>
+                    <a href="https://www.myregistry.com/giftlist/kingg" target="_blank" class="wishlist-link">View MyRegistry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="rsvp">
+        <div class="container">
+            <h2 class="section-title">🚔 RSVP 🐼</h2>
+            <p class="rsvp-intro">Please let us know if you can make it!</p>
+            <form id="rsvpForm" class="rsvp-form" action="https://formspree.io/f/xzzorzpz" method="POST">
+                <div class="form-group">
+                    <label for="parentName">Parent/Guardian Name *</label>
+                    <input type="text" id="parentName" name="parentName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="childName">Child's Name *</label>
+                    <input type="text" id="childName" name="childName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="attending">Will you be attending? *</label>
+                    <select id="attending" name="attending" required>
+                        <option value="">Please select...</option>
+                        <option value="yes">Yes! We'll be there! 🎉</option>
+                        <option value="no">Sorry, can't make it 😢</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="guestsGroup" style="display: none;">
+                    <label for="guests">Number of Guests (including child) *</label>
+                    <input type="number" id="guests" name="guests" min="1" max="10" value="1" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send RSVP 🎈</button>
+            </form>
+            <div id="formSuccess" class="form-success">
+                <div class="success-icon">✅</div>
+                <h3>Thank you for your RSVP!</h3>
+                <p>We're excited to celebrate with you! 🎉</p>
+                <div class="celebration-emojis">
+                    <span>🎉</span>
+                    <span>🐼</span>
+                    <span>🚒</span>
+                    <span>🎈</span>
+                    <span>🚔</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Can't wait to celebrate with you! 🐼🚒🚔🎉</p>
+            <p>Questions? Contact us at: <a href="mailto:alikiandgeorge@gmail.com">alikiandgeorge@gmail.com</a></p>
+            <div class="footer-emojis">
+                <span>🎂</span>
+                <span>🎈</span>
+                <span>🎁</span>
+                <span>🎊</span>
+                <span>🎉</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
