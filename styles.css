@@ -395,3 +395,101 @@ footer a {
         font-size: 2.5rem;
     }
 }
+
+/* Mobile Optimization */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Hero Section Mobile */
+    .hero-content {
+        padding: 20px 15px;
+        transform: rotate(0deg);
+        /* Remove rotation on small screens to save space */
+        animation: none;
+        /* Optional: remove float if it's distracting/laggy */
+        width: 95%;
+    }
+
+    .glitch-title {
+        font-size: 2.2rem;
+        /* Smaller title */
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .badge-container {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 0.5rem;
+    }
+
+    .age-badge {
+        font-size: 4rem;
+        border-width: 5px;
+    }
+
+    .cta-btn {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        width: 100%;
+        /* Full width button */
+    }
+
+    /* Countdown Mobile */
+    .countdown-grid {
+        gap: 10px;
+    }
+
+    .countdown-item {
+        min-width: 70px;
+        padding: 10px;
+        flex: 1 1 40%;
+        /* 2 per row */
+    }
+
+    .countdown-number {
+        font-size: 2rem;
+    }
+
+    .countdown-label {
+        font-size: 0.9rem;
+    }
+
+    /* Grid & Cards Mobile */
+    .grid-container {
+        grid-template-columns: 1fr;
+        /* Stack cards */
+        gap: 20px;
+    }
+
+    .glass-card {
+        padding: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+    }
+
+    /* RSVP Form Mobile */
+    .rsvp-container {
+        padding: 1.5rem;
+        border-width: 5px;
+    }
+
+    .form-input {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+
+    .submit-btn {
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+}
