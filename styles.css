@@ -50,13 +50,16 @@ img { display: block; max-width: 100%; }
 .cta-btn span, .submit-btn span { font-size: 22px; line-height: 1; }
 .hero-details-link { display: block; width: fit-content; padding-block: 12px; margin-top: 2px; font-size: 14px; font-weight: 800; }
 .hero-art { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-width: 0; margin-right: 24px; transform: rotate(2deg); border: 3px solid var(--ink); border-radius: 12px; background: var(--ink); gap: 3px; box-shadow: var(--shadow); overflow: visible; }
-.character-panel { position: relative; overflow: hidden; min-width: 0; aspect-ratio: 3 / 5; background: #dce8fa; }
-.spider-panel { background: #e73548; border-radius: 8px 0 0 8px; }
-.optimus-panel { background: #2466d3; border-radius: 0 8px 8px 0; }
+.character-panel { position: relative; overflow: hidden; min-width: 0; aspect-ratio: 1; background: #dce8fa; }
+.spider-panel { background: #e73548; border-radius: 8px 0 0 0; }
+.optimus-panel { background: #2466d3; border-radius: 0 8px 0 0; }
+.lightning-panel { grid-column: 1 / -1; aspect-ratio: 2.5; background: var(--yellow); border-radius: 0 0 8px 8px; }
 .character-panel img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .spider-panel img { object-position: 70% center; }
 .optimus-panel img { object-fit: cover; padding-bottom: 34px; }
+.lightning-panel img { width: 62%; margin-left: auto; object-fit: cover; object-position: center 60%; }
 .character-name { position: absolute; bottom: 18px; left: 8px; right: 8px; padding: 8px 2px; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); font-family: var(--font-heading); font-size: clamp(20px, 2.3vw, 30px); line-height: 1.05; text-align: center; letter-spacing: .035em; transform: rotate(-2deg); }
+.lightning-panel .character-name { top: 50%; bottom: auto; right: auto; width: 39%; padding: 12px 4px; transform: translateY(-50%) rotate(-2deg); }
 .teamup-seal { position: absolute; top: -25px; right: -16px; width: 91px; height: 91px; display: flex; align-items: center; justify-content: center; background: var(--yellow); border: 3px solid var(--ink); border-radius: 50%; color: var(--ink); font-family: var(--font-heading); text-align: center; font-size: 30px; line-height: .95; transform: rotate(10deg); }
 .party-section { background: var(--paper-deep); border-block: 1px solid rgb(21 38 75 / 14%); padding-block: 72px; }
 .party-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 88px; align-items: start; }
@@ -99,7 +102,7 @@ input:focus, select:focus { border-color: var(--blue); }
 .wishlist { padding-block: 60px; display: flex; align-items: center; justify-content: space-between; gap: 36px; }
 .wishlist h2 { font-size: 34px; }
 .wishlist p { margin-top: 8px; color: var(--muted); }
-.gift-links { display: flex; gap: 12px; flex-wrap: wrap; }
+.gift-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-width: 340px; }
 .gift-links a { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 48px; padding: 12px 18px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; font-weight: 900; text-decoration: none; transition: border-color .18s ease; }
 .gift-links a:hover { border-color: var(--blue); color: var(--blue); }
 footer { background: var(--ink); color: var(--paper); padding-block: 32px; }
@@ -128,7 +131,8 @@ footer a:focus-visible { outline-color: var(--yellow); }
     .hero-event { margin-top: 20px; }
     .cta-btn { margin-top: 22px; }
     .hero-art { width: calc(100% - 12px); margin-inline: auto; transform: rotate(1deg); }
-    .character-panel { aspect-ratio: 3 / 4; }
+    .character-panel { aspect-ratio: 1; }
+    .lightning-panel { aspect-ratio: 2.3; }
     .character-name { font-size: clamp(20px, 5.5vw, 30px); bottom: 12px; }
     .teamup-seal { width: 74px; height: 74px; font-size: 25px; top: -19px; right: -10px; }
     .party-section { padding-block: 42px; }
@@ -143,8 +147,8 @@ footer a:focus-visible { outline-color: var(--yellow); }
     .rsvp-container h2 { font-size: 40px; }
     .wishlist { padding-block: 40px; }
     .wishlist h2 { font-size: 32px; }
-    .gift-links { width: 100%; gap: 10px; }
-    .gift-links a { flex: 1 1 auto; gap: 16px; padding-inline: 14px; }
+    .gift-links { width: 100%; min-width: 0; gap: 10px; }
+    .gift-links a { gap: 16px; padding-inline: 14px; }
     .footer-content { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -1,6 +1,6 @@
 # G's fifth-birthday invitation
 
-Static HTML/CSS/JavaScript invitation for January 16, 2027, 10 AM–12 PM Central Time at Takeoff Adventure Park in Plano. Theme: Spider-Man and Optimus Prime.
+Static HTML/CSS/JavaScript invitation for January 16, 2027, 10 AM–12 PM Central Time at Takeoff Adventure Park in Plano. Theme: Spider-Man, Optimus Prime, and Lightning McQueen.
 
 ## Preview
 
