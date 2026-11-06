@@ -1,211 +1,190 @@
-// Scroll Animations (Bouncy)
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-};
+// Event timestamps include the venue's UTC offset and live on <body>.
+function getPartyState(now, start, end) {
+    if (![now, start, end].every(Number.isFinite) || end <= start) return 'unavailable';
+    if (now < start) return 'upcoming';
+    return now < end ? 'active' : 'ended';
+}
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+function initializeInvitation() {
+    const partyStart = Date.parse(document.body.dataset.partyStart);
+    const partyEnd = Date.parse(document.body.dataset.partyEnd);
+    const countdown = document.getElementById('countdown');
+    const eventStatus = document.getElementById('eventStatus');
+    const eventClosed = document.getElementById('eventClosed');
+    const form = document.getElementById('rsvpForm');
+    const attending = document.getElementById('attending');
+    const guestsGroup = document.getElementById('guestsGroup');
+    const guests = document.getElementById('guests');
+    const submitButton = form.querySelector('.submit-btn');
+    const success = document.getElementById('formSuccess');
+    const successTitle = document.getElementById('successTitle');
+    const successMessage = document.getElementById('successMessage');
+    const formError = document.getElementById('formError');
+    const defaultSubmitText = submitButton.textContent;
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const confetti = new Set();
+    let phase;
+    let sending = false;
+    let submitted = false;
+    let timer = null;
+
+    function syncGuests() {
+        const needsGuests = attending.value === 'yes';
+        guestsGroup.hidden = !needsGuests;
+        guests.disabled = !needsGuests;
+        guests.required = needsGuests;
+        if (!needsGuests) guests.value = '';
+    }
+
+    function updateCountdown() {
+        const now = Date.now();
+        const nextPhase = getPartyState(now, partyStart, partyEnd);
+        if (nextPhase !== phase) {
+            phase = nextPhase;
+            document.body.dataset.partyState = phase;
+            const closed = phase === 'ended' || phase === 'unavailable';
+            countdown.hidden = phase !== 'upcoming';
+            eventStatus.hidden = false;
+            eventStatus.textContent = {
+                upcoming: 'Counting down to party time!',
+                active: 'It’s party time! Let’s celebrate!',
+                ended: 'Thanks for celebrating with us!',
+                unavailable: 'Party details are being updated. Please email us with any questions.'
+            }[phase];
+            eventClosed.hidden = phase !== 'ended';
+            form.hidden = closed || submitted;
+            success.hidden = closed || !submitted;
+            submitButton.disabled = closed || sending;
+            if (closed) {
+                formError.hidden = true;
+                window.clearInterval(timer);
+                timer = null;
+            }
+        }
+        if (phase !== 'upcoming') return;
+        const remaining = Math.max(0, Math.ceil((partyStart - now) / 1000));
+        const values = {
+            days: Math.floor(remaining / 86400),
+            hours: Math.floor((remaining % 86400) / 3600),
+            minutes: Math.floor((remaining % 3600) / 60),
+            seconds: remaining % 60
+        };
+        for (const [id, value] of Object.entries(values)) {
+            document.getElementById(id).textContent = String(value).padStart(2, '0');
+        }
+    }
+
+    function resumeCountdown() {
+        updateCountdown();
+        if (!document.hidden && !timer && (phase === 'upcoming' || phase === 'active')) {
+            timer = window.setInterval(updateCountdown, 1000);
+        }
+    }
+
+    function clearConfetti() {
+        for (const { element, animation } of confetti) {
+            animation.cancel();
+            element.remove();
+        }
+        confetti.clear();
+    }
+
+    function celebrate() {
+        if (motionPreference.matches || document.hidden || !Element.prototype.animate) return;
+        const colors = ['#c62828', '#1761a0', '#f6c744'];
+        for (let i = 0; i < 24; i++) {
+            const element = document.createElement('span');
+            element.setAttribute('aria-hidden', 'true');
+            element.style.cssText = 'position:fixed;left:50%;top:45%;width:9px;height:9px;pointer-events:none;z-index:1000;border-radius:2px;';
+            element.style.backgroundColor = colors[i % colors.length];
+            document.body.append(element);
+            const angle = (i / 24) * Math.PI * 2;
+            const distance = 80 + Math.random() * 100;
+            const animation = element.animate([
+                { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+                { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance + 80}px) rotate(180deg)`, opacity: 0 }
+            ], { duration: 1000, easing: 'ease-out' });
+            const particle = { element, animation };
+            confetti.add(particle);
+            animation.onfinish = () => {
+                element.remove();
+                confetti.delete(particle);
+            };
+        }
+    }
+
+    attending.addEventListener('change', syncGuests);
+    syncGuests();
+    resumeCountdown();
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            window.clearInterval(timer);
+            timer = null;
+            clearConfetti();
+        } else {
+            resumeCountdown();
         }
     });
-}, observerOptions);
+    motionPreference.addEventListener('change', () => {
+        if (motionPreference.matches) clearConfetti();
+    });
+    window.addEventListener('pageshow', () => {
+        syncGuests();
+        resumeCountdown();
+    });
 
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        updateCountdown();
+        if (sending || submitted || phase === 'ended' || phase === 'unavailable') return;
+        syncGuests();
+        if (!form.reportValidity()) return;
 
-// Countdown Timer
-function updateCountdown() {
-    const partyDate = new Date('2026-01-17T16:30:00').getTime();
-    const now = new Date().getTime();
-    const distance = partyDate - now;
+        const formData = new FormData(form);
+        const willAttend = formData.get('attending') === 'yes';
+        // Disabled fields are excluded natively; remove explicitly as a second guard.
+        if (!willAttend) formData.delete('guests');
+        const childName = String(formData.get('childName') || '').trim();
+        sending = true;
+        formError.hidden = true;
+        form.setAttribute('aria-busy', 'true');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending…';
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 15000);
 
-    if (distance < 0) {
-        document.getElementById('countdown').innerHTML = '<div class="countdown-item" style="width: 100%; font-size: 2rem; color: var(--color-red);">PARTY TIME! 🎉</div>';
-        return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById('days').textContent = String(days).padStart(2, '0');
-    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-}
-
-setInterval(updateCountdown, 1000);
-updateCountdown();
-
-// Hero Canvas Particles (Balloons & Confetti)
-const canvas = document.getElementById('heroCanvas');
-const ctx = canvas.getContext('2d');
-let particlesArray = [];
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-const colors = ['#FF5555', '#4488FF', '#FFD700', '#44CC44', '#9966FF'];
-
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = canvas.height + Math.random() * 100; // Start below screen
-        this.size = Math.random() * 15 + 10; // Bigger particles
-        this.speedY = Math.random() * 2 + 1; // Float up
-        this.speedX = Math.random() * 2 - 1; // Wiggle
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.rotation = Math.random() * 360;
-        this.rotationSpeed = Math.random() * 2 - 1;
-        this.type = Math.random() > 0.8 ? 'balloon' : 'confetti';
-    }
-
-    update() {
-        this.y -= this.speedY;
-        this.x += Math.sin(this.y * 0.01) + this.speedX;
-        this.rotation += this.rotationSpeed;
-
-        if (this.y < -50) { // Reset when off top of screen
-            this.y = canvas.height + 50;
-            this.x = Math.random() * canvas.width;
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { Accept: 'application/json' },
+                signal: controller.signal
+            });
+            if (!response.ok) throw new Error('RSVP was not accepted');
+            submitted = true;
+            updateCountdown();
+            if (phase === 'ended' || phase === 'unavailable') return;
+            form.hidden = true;
+            successTitle.textContent = willAttend ? 'You’re on the guest list!' : 'Thanks for letting us know';
+            successMessage.textContent = willAttend
+                ? `We can’t wait to celebrate with ${childName || 'you'}!`
+                : `We’ll miss ${childName || 'you'}. Thanks for sending your RSVP.`;
+            success.hidden = false;
+            successTitle.focus();
+            if (willAttend) celebrate();
+        } catch (error) {
+            updateCountdown();
+            if (phase !== 'ended' && phase !== 'unavailable') formError.hidden = false;
+        } finally {
+            window.clearTimeout(timeout);
+            sending = false;
+            form.removeAttribute('aria-busy');
+            submitButton.textContent = defaultSubmitText;
+            submitButton.disabled = submitted || phase === 'ended' || phase === 'unavailable';
         }
-    }
-
-    draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.rotation * Math.PI / 180);
-        ctx.fillStyle = this.color;
-
-        if (this.type === 'balloon') {
-            // Draw Balloon
-            ctx.beginPath();
-            ctx.ellipse(0, 0, this.size, this.size * 1.2, 0, 0, Math.PI * 2);
-            ctx.fill();
-            // String
-            ctx.beginPath();
-            ctx.moveTo(0, this.size * 1.2);
-            ctx.lineTo(0, this.size * 2.5);
-            ctx.strokeStyle = 'rgba(0,0,0,0.2)';
-            ctx.stroke();
-        } else {
-            // Draw Confetti (Square)
-            ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-        }
-
-        ctx.restore();
-    }
+    });
 }
 
-function initParticles() {
-    particlesArray = [];
-    for (let i = 0; i < 50; i++) {
-        particlesArray.push(new Particle());
-    }
-}
-
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-        particlesArray[i].draw();
-    }
-    requestAnimationFrame(animateParticles);
-}
-
-initParticles();
-animateParticles();
-
-// RSVP Form Logic
-const rsvpForm = document.getElementById('rsvpForm');
-const attendingSelect = document.getElementById('attending');
-const guestsGroup = document.getElementById('guestsGroup');
-
-attendingSelect.addEventListener('change', function () {
-    if (this.value === 'yes') {
-        guestsGroup.style.display = 'block';
-        guestsGroup.classList.add('fade-up', 'visible');
-    } else {
-        guestsGroup.style.display = 'none';
-    }
-});
-
-rsvpForm.addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(rsvpForm);
-    const submitBtn = rsvpForm.querySelector('.submit-btn');
-
-    submitBtn.textContent = 'Sending... 🚀';
-    submitBtn.disabled = true;
-
-    try {
-        const response = await fetch(rsvpForm.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            rsvpForm.style.display = 'none';
-            const successMsg = document.getElementById('formSuccess');
-            successMsg.style.display = 'block';
-            successMsg.classList.add('fade-up', 'visible');
-
-            // Celebration Confetti Explosion
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createConfettiExplosion();
-                }, i * 300);
-            }
-        } else {
-            throw new Error('Submission failed');
-        }
-    } catch (error) {
-        alert('Uh oh! Something went wrong. Try again!');
-        submitBtn.textContent = 'Send RSVP! 🎈';
-        submitBtn.disabled = false;
-    }
-});
-
-// Confetti Explosion for Success
-function createConfettiExplosion() {
-    const colors = ['#FF5555', '#4488FF', '#FFD700', '#44CC44', '#9966FF'];
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * window.innerHeight;
-
-    for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.style.position = 'fixed';
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
-        particle.style.width = '10px';
-        particle.style.height = '10px';
-        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        particle.style.borderRadius = '50%';
-        particle.style.pointerEvents = 'none';
-        particle.style.zIndex = '9999';
-        document.body.appendChild(particle);
-
-        const angle = Math.random() * Math.PI * 2;
-        const velocity = Math.random() * 200 + 50;
-
-        particle.animate([
-            { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-            { transform: `translate(${Math.cos(angle) * velocity}px, ${Math.sin(angle) * velocity}px) scale(0)`, opacity: 0 }
-        ], {
-            duration: 1500,
-            easing: 'cubic-bezier(0, .9, .57, 1)'
-        }).onfinish = () => particle.remove();
-    }
-}
+if (typeof document !== 'undefined') initializeInvitation();
+if (typeof module !== 'undefined' && module.exports) module.exports = { getPartyState };

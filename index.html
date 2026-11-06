@@ -1,190 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G's 4th Birthday | Panda Rescue Squad</title>
+    <meta name="theme-color" content="#15264b">
+    <meta name="description" content="G is turning 5! Join his Spider-Man and Optimus Prime birthday adventure on January 16, 2027, 10 AM–12 PM at Takeoff Adventure Park in Plano.">
+    <title>G Is Turning 5! | Spider-Man &amp; Optimus Prime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&amp;family=Nunito+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <noscript><style>#rsvpForm, .countdown-section { display: none !important; }</style></noscript>
 </head>
-
-<body>
-    <!-- Hero Section -->
-    <header class="hero">
-        <div class="hero-content">
-            <div class="badge-container">
-                <div class="age-badge">4</div>
+<body data-party-start="2027-01-16T10:00:00-06:00" data-party-end="2027-01-16T12:00:00-06:00">
+    <a class="skip-link" href="#main">Skip to invitation</a>
+    <header class="site-header">
+        <nav class="container site-nav" aria-label="Main navigation">
+            <a class="wordmark" href="#main" aria-label="G's fifth birthday home">G’S BIG <span>5</span></a>
+            <div class="nav-links">
+                <a href="#party-details">The party</a>
+                <a class="nav-rsvp" href="#rsvp">RSVP <span aria-hidden="true">↗</span></a>
             </div>
-            <h1 class="glitch-title">PANDA RESCUE! 🐼</h1>
-            <p class="hero-subtitle">Calling All Super Heroes for G's Birthday!</p>
-
-            <button class="cta-btn"
-                onclick="document.querySelector('.party-details').scrollIntoView({behavior: 'smooth'})">
-                Let's Party! 🎉
-            </button>
-        </div>
-        <!-- Canvas for balloons/confetti -->
-        <canvas id="heroCanvas"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+        </nav>
     </header>
-
-    <!-- Countdown Timer -->
-    <section class="countdown-section">
-        <div class="container">
-            <div id="countdown" class="countdown-grid">
-                <div class="countdown-item">
-                    <span id="days" class="countdown-number">00</span>
-                    <span class="countdown-label">Days</span>
+    <main id="main">
+        <section class="hero container" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <h1 id="hero-title">G is turning <span>5!</span></h1>
+                <p class="hero-subtitle">Web-slingers, Autobots…<br> let’s party!</p>
+                <p class="hero-description">A Spider-Man &amp; Optimus Prime birthday adventure.</p>
+                <div class="hero-event">
+                    <p><time datetime="2027-01-16">Saturday, January 16, 2027</time></p>
+                    <p>10 AM–12 PM <span aria-hidden="true">·</span> Plano, TX</p>
+                    <p>Takeoff Adventure Park</p>
                 </div>
-                <div class="countdown-item">
-                    <span id="hours" class="countdown-number">00</span>
-                    <span class="countdown-label">Hours</span>
-                </div>
-                <div class="countdown-item">
-                    <span id="minutes" class="countdown-number">00</span>
-                    <span class="countdown-label">Mins</span>
-                </div>
-                <div class="countdown-item">
-                    <span id="seconds" class="countdown-number">00</span>
-                    <span class="countdown-label">Secs</span>
-                </div>
+                <a class="cta-btn" href="#rsvp">RSVP for the party <span aria-hidden="true">↗</span></a>
+                <a class="hero-details-link" href="#party-details">Get the party details</a>
             </div>
-        </div>
-    </section>
-
-    <!-- Party Details Section -->
-    <section class="party-details">
-        <div class="container">
-            <h2 class="section-title">Party <span>Details</span></h2>
-            <div class="grid-container">
-                <div class="glass-card fade-up">
-                    <div class="card-icon">📅</div>
-                    <h3 class="card-title">When?</h3>
-                    <p class="card-text">Saturday, Jan 17th, 2026</p>
+            <div class="hero-art" aria-label="Spider-Man and Optimus Prime birthday team-up">
+                <div class="character-panel spider-panel">
+                    <img src="assets/spider-man.webp" alt="Spider-Man in his red and blue suit" width="1920" height="640" fetchpriority="high">
+                    <span class="character-name">Spider-Man</span>
                 </div>
-                <div class="glass-card fade-up">
-                    <div class="card-icon">⏰</div>
-                    <h3 class="card-title">Time?</h3>
-                    <p class="card-text">4:30 PM (Party Time!)</p>
+                <div class="character-panel optimus-panel">
+                    <img src="assets/optimus-prime.webp" alt="Optimus Prime in his red and blue armor" width="850" height="850" fetchpriority="high">
+                    <span class="character-name">Optimus Prime</span>
                 </div>
-                <div class="glass-card fade-up">
-                    <div class="card-icon">📍</div>
-                    <h3 class="card-title">Where?</h3>
-                    <p class="card-text">Pump It Up Frisco<br>Frisco, TX</p>
-                    <a href="https://maps.google.com/?q=7164+Technology+Dr+Ste+200+Frisco+TX+75034" target="_blank"
-                        style="display: inline-block; margin-top: 1rem; color: var(--color-blue); text-decoration: none; font-weight: bold; font-size: 1.2rem;">See
-                        Map 🗺️</a>
-                </div>
+                <span class="teamup-seal" aria-hidden="true">Team<br>G!</span>
             </div>
-        </div>
-    </section>
-
-    <!-- Activities Section -->
-    <section class="activities">
-        <div class="container">
-            <h2 class="section-title">What to <span>Expect!</span></h2>
-            <div class="grid-container">
-                <div class="glass-card fade-up">
-                    <div class="card-icon">🏃</div>
-                    <h3 class="card-title">Jump & Play!</h3>
-                    <p class="card-text">Big bouncy houses to jump in!<br><br><em
-                            style="color: var(--color-red); font-size: 0.9rem;">*Make sure to bring socks!</em></p>
-                </div>
-                <div class="glass-card fade-up">
-                    <div class="card-icon">🍕</div>
-                    <h3 class="card-title">Yummy Food!</h3>
-                    <p class="card-text">Pizza, snacks, and cake!</p>
-                </div>
-                <div class="glass-card fade-up">
-                    <div class="card-icon">🐼</div>
-                    <h3 class="card-title">Panda Squad!</h3>
-                    <p class="card-text">Come play with the rescue team!</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Wishlist Section -->
-    <section class="wishlist">
-        <div class="container">
-            <h2 class="section-title">Gift <span>Ideas</span></h2>
-            <p style="text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 2rem;">(Only if you want
-                to!)</p>
-            <div class="grid-container">
-                <a href="https://www.target.com/gift-registry/gift/BabyGG5" target="_blank" class="glass-card fade-up"
-                    style="text-decoration: none;">
-                    <div class="card-icon">🎯</div>
-                    <h3 class="card-title">Target</h3>
-                </a>
-                <a href="https://www.amazon.com/registries/gl/guest-view/LW0V9NEIIE22" target="_blank"
-                    class="glass-card fade-up" style="text-decoration: none;">
-                    <div class="card-icon">📦</div>
-                    <h3 class="card-title">Amazon</h3>
-                </a>
-                <a href="https://www.myregistry.com/giftlist/kingg" target="_blank" class="glass-card fade-up"
-                    style="text-decoration: none;">
-                    <div class="card-icon">🎁</div>
-                    <h3 class="card-title">MyRegistry</h3>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- RSVP Section -->
-    <section class="rsvp-section">
-        <div class="container">
-            <div class="rsvp-container fade-up">
-                <h2 class="section-title"
-                    style="margin-bottom: 2rem; color: var(--color-blue); text-shadow: none; -webkit-text-stroke: 0;">
-                    Are You <span>Coming?</span></h2>
-                <form id="rsvpForm" action="https://formspree.io/f/xzzorzpz" method="POST">
-                    <div class="form-group">
-                        <label class="form-label" for="parentName">Parent's Name</label>
-                        <input type="text" id="parentName" name="parentName" class="form-input" required
-                            placeholder="Mom or Dad's name">
+        </section>
+        <section class="party-section" id="party-details" aria-labelledby="details-title">
+            <div class="container party-layout">
+                <div class="party-details">
+                    <h2 id="details-title">Your mission:<br><span>celebrate G.</span></h2>
+                    <dl class="event-details">
+                        <div>
+                            <dt>When</dt>
+                            <dd><time datetime="2027-01-16">Saturday, January 16, 2027</time><br><span>10 AM–12 PM Central Time</span></dd>
+                        </div>
+                        <div>
+                            <dt>Where</dt>
+                            <dd>Takeoff Adventure Park<br><address>1300 Custer Rd<br>Plano, TX 75075</address>
+                                <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Takeoff+Adventure+Park+1300+Custer+Rd+Plano+TX+75075" target="_blank" rel="noopener noreferrer">Get directions <span aria-hidden="true">↗</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                    <div class="countdown-section">
+                        <h3>Adventure starts in…</h3>
+                        <div id="countdown" class="countdown-grid" aria-label="Time until the party">
+                            <div class="countdown-item"><span id="days" class="countdown-number">—</span><span class="countdown-label">Days</span></div>
+                            <div class="countdown-item"><span id="hours" class="countdown-number">—</span><span class="countdown-label">Hours</span></div>
+                            <div class="countdown-item"><span id="minutes" class="countdown-number">—</span><span class="countdown-label">Mins</span></div>
+                            <div class="countdown-item"><span id="seconds" class="countdown-number">—</span><span class="countdown-label">Secs</span></div>
+                        </div>
+                        <p id="eventStatus" class="event-status" role="status" hidden></p>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="childName">Child's Name</label>
-                        <input type="text" id="childName" name="childName" class="form-input" required
-                            placeholder="Who is coming to play?">
+                </div>
+                <div class="rsvp-container" id="rsvp">
+                    <h2>Joining the <span>team?</span></h2>
+                    <p class="rsvp-intro">Let us know if your crew can make it.</p>
+                    <p id="eventClosed" class="event-closed" hidden>The party has ended. Thanks for celebrating G’s big day!</p>
+                    <form id="rsvpForm" action="https://formspree.io/f/xzzorzpz" method="POST">
+                        <input type="hidden" name="event" value="G's 5th birthday — January 16, 2027">
+                        <div class="form-group">
+                            <label for="parentName">Parent or caregiver’s name</label>
+                            <input type="text" id="parentName" name="parentName" required autocomplete="name" placeholder="Your name" maxlength="120">
+                        </div>
+                        <div class="form-group">
+                            <label for="childName">Child’s name</label>
+                            <input type="text" id="childName" name="childName" required placeholder="Your little hero’s name" maxlength="120">
+                        </div>
+                        <div class="form-group">
+                            <label for="attending">Will you be there?</label>
+                            <select id="attending" name="attending" required>
+                                <option value="">Choose your answer</option>
+                                <option value="yes">Yes! Count us in.</option>
+                                <option value="no">Sorry, we can’t make it.</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="guestsGroup" hidden>
+                            <label for="guests">Total people attending</label>
+                            <p class="field-hint" id="guestsHint">Include all adults and children in your group.</p>
+                            <input type="number" id="guests" name="guests" min="1" max="10" step="1" inputmode="numeric" aria-describedby="guestsHint" placeholder="e.g. 3" disabled>
+                        </div>
+                        <div id="formError" class="form-error" role="alert" hidden>We couldn’t send your RSVP. Your answers are still here—please try again, or <a href="mailto:alikiandgeorge@gmail.com">email us</a>.</div>
+                        <button type="submit" class="submit-btn">Send RSVP <span aria-hidden="true">↗</span></button>
+                    </form>
+                    <div id="formSuccess" class="form-success" role="status" hidden>
+                        <span class="success-check" aria-hidden="true">✓</span>
+                        <h3 id="successTitle" tabindex="-1">RSVP received!</h3>
+                        <p id="successMessage">Thanks for letting us know.</p>
+                        <a href="mailto:alikiandgeorge@gmail.com">Need to change your answer? Email us.</a>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="attending">Will you be there?</label>
-                        <select id="attending" name="attending" class="form-input" required>
-                            <option value="">Choose one...</option>
-                            <option value="yes">Yes! We are coming! 🎉</option>
-                            <option value="no">No, we can't make it 😢</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group" id="guestsGroup" style="display: none;">
-                        <label class="form-label" for="guests">How many people?</label>
-                        <input type="number" id="guests" name="guests" min="1" max="10" value="1" class="form-input"
-                            required>
-                    </div>
-
-                    <button type="submit" class="submit-btn">Send RSVP! 🎈</button>
-                </form>
-                <div id="formSuccess" style="display: none; text-align: center; padding: 2rem;">
-                    <div style="font-size: 5rem; margin-bottom: 1rem; animation: bounce 1s infinite;">✅</div>
-                    <h3 style="color: var(--color-green); font-size: 2.5rem; margin-bottom: 1rem;">Yay! Sent!</h3>
-                    <p style="font-size: 1.5rem; font-weight: bold;">See you at the party!</p>
+                    <noscript><p class="form-error">To RSVP, please <a href="mailto:alikiandgeorge@gmail.com">email us</a> with your names, attendance, and total number of guests.</p></noscript>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
+        </section>
+        <section class="wishlist container" aria-labelledby="gifts-title">
+            <div>
+                <h2 id="gifts-title">A little gift inspiration.</h2>
+                <p>Only if you’d like to!</p>
+            </div>
+            <div class="gift-links">
+                <a href="https://www.target.com/gift-registry/gift/BabyGG5" target="_blank" rel="noopener noreferrer">Target <span aria-hidden="true">↗</span></a>
+                <a href="https://www.amazon.com/registries/gl/guest-view/LW0V9NEIIE22" target="_blank" rel="noopener noreferrer">Amazon <span aria-hidden="true">↗</span></a>
+                <a href="https://www.myregistry.com/giftlist/kingg" target="_blank" rel="noopener noreferrer">MyRegistry <span aria-hidden="true">↗</span></a>
+            </div>
+        </section>
+    </main>
     <footer>
-        <div class="container">
-            <p>Panda Rescue Squad 🐼🚒🚔</p>
-            <p style="margin-top: 10px;">Questions? <a href="mailto:alikiandgeorge@gmail.com">Email Us!</a></p>
+        <div class="container footer-content">
+            <p class="footer-signoff">Big heroes. Bigger birthday.</p>
+            <p>Questions? <a href="mailto:alikiandgeorge@gmail.com">Email Aliki &amp; George</a></p>
         </div>
     </footer>
-
     <script src="script.js"></script>
 </body>
-
 </html>
