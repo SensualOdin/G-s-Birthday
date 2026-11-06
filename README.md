@@ -27,3 +27,5 @@ The lifecycle tests cover the venue's explicit UTC offset and the event's start/
 Visible copy lives in `index.html`. Its body `data-party-start` and `data-party-end` attributes are the countdown and closure source of truth; retain an explicit UTC offset when changing them. For this January event, Plano is UTC−06:00. RSVP closes at the event's end.
 
 `PRODUCT.md` records confirmed facts and `DESIGN.md` records the current design. Artwork sources are in `assets/SOURCES.md`. Existing host contact, Formspree endpoint, and gift registry links are retained. GitHub Pages publishes the `main` branch at https://g5birthday.com.
+
+The stylesheet and script URLs in `index.html` include content-hash revision parameters so returning visitors do not mix new markup with cached assets. When either file changes, update its parameter to the first 12 characters of its SHA-256 hash (`shasum -a 256 styles.css script.js`).
