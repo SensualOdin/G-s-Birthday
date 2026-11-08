@@ -20,7 +20,7 @@ node --check script.js
 git diff --check
 ```
 
-The lifecycle tests cover the venue's explicit UTC offset and the event's start/end boundaries. Browser verification should also cover attendance changes, native validation, request failures/retries, duplicate sends, success focus, and reduced motion. Mock `window.fetch` when checking submission flows to avoid creating test RSVPs in the existing Formspree account.
+Tests cover the venue's explicit UTC offset, the event's start/end boundaries, and required email-or-phone contact validation. Browser verification should also cover attendance changes, contact details in the submission payload, native validation, request failures/retries, duplicate sends, success focus, and reduced motion. Mock `window.fetch` when checking submission flows to avoid creating test RSVPs in the existing Formspree account.
 
 ## Event information
 

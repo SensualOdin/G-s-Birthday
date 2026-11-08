@@ -5,6 +5,13 @@ function getPartyState(now, start, end) {
     return now < end ? 'active' : 'ended';
 }
 
+function isValidContact(value) {
+    const contact = value.trim();
+    if (contact.includes('@')) return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+    const digits = contact.replace(/\D/g, '');
+    return /^\+?[\d\s().-]+$/.test(contact) && digits.length >= 7 && digits.length <= 15;
+}
+
 function initializeInvitation() {
     const partyStart = Date.parse(document.body.dataset.partyStart);
     const partyEnd = Date.parse(document.body.dataset.partyEnd);
@@ -12,6 +19,7 @@ function initializeInvitation() {
     const eventStatus = document.getElementById('eventStatus');
     const eventClosed = document.getElementById('eventClosed');
     const form = document.getElementById('rsvpForm');
+    const contact = document.getElementById('contact');
     const attending = document.getElementById('attending');
     const guestsGroup = document.getElementById('guestsGroup');
     const guests = document.getElementById('guests');
@@ -27,6 +35,12 @@ function initializeInvitation() {
     let sending = false;
     let submitted = false;
     let timer = null;
+
+    function validateContact() {
+        contact.setCustomValidity(contact.value && !isValidContact(contact.value)
+            ? 'Enter an email address or a phone number, such as you@example.com or (972) 555-0123.'
+            : '');
+    }
 
     function syncGuests() {
         const needsGuests = attending.value === 'yes';
@@ -114,6 +128,9 @@ function initializeInvitation() {
     }
 
     attending.addEventListener('change', syncGuests);
+    contact.addEventListener('input', validateContact);
+    contact.addEventListener('change', validateContact);
+    validateContact();
     syncGuests();
     resumeCountdown();
 
@@ -131,6 +148,7 @@ function initializeInvitation() {
     });
     window.addEventListener('pageshow', () => {
         syncGuests();
+        validateContact();
         resumeCountdown();
     });
 
@@ -139,9 +157,11 @@ function initializeInvitation() {
         updateCountdown();
         if (sending || submitted || phase === 'ended' || phase === 'unavailable') return;
         syncGuests();
+        validateContact();
         if (!form.reportValidity()) return;
 
         const formData = new FormData(form);
+        formData.set('contact', contact.value.trim());
         const willAttend = formData.get('attending') === 'yes';
         // Disabled fields are excluded natively; remove explicitly as a second guard.
         if (!willAttend) formData.delete('guests');
@@ -187,4 +207,4 @@ function initializeInvitation() {
 }
 
 if (typeof document !== 'undefined') initializeInvitation();
-if (typeof module !== 'undefined' && module.exports) module.exports = { getPartyState };
+if (typeof module !== 'undefined' && module.exports) module.exports = { getPartyState, isValidContact };

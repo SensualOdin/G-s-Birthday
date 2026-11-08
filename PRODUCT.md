@@ -17,4 +17,4 @@ A personal invitation for friends and families to understand the party details a
 
 ## Main flow
 
-Read the date/time/venue in the first screen, jump directly to RSVP, enter caregiver and child names, select attendance, and give a total adults-plus-children count only when attending. Declines must not send stale guest counts. Provide accessible success, recoverable errors, reduced motion, explicit event timezone, and a closed state after noon.
+Read the date/time/venue in the first screen, jump directly to RSVP, enter caregiver and child names, provide either an email address or phone number, select attendance, and give a total adults-plus-children count only when attending. Contact information is required for both attending and declining RSVPs. Declines must not send stale guest counts. Provide accessible success, recoverable errors, reduced motion, explicit event timezone, and a closed state after noon.

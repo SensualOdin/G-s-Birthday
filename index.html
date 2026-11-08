@@ -91,6 +91,11 @@
                             <input type="text" id="parentName" name="parentName" required autocomplete="name" placeholder="Your name" maxlength="120">
                         </div>
                         <div class="form-group">
+                            <label for="contact">Email or phone number (required)</label>
+                            <p class="field-hint" id="contactHint">Either one is fine. For phone numbers, include the area code.</p>
+                            <input type="text" id="contact" name="contact" required aria-describedby="contactHint" autocapitalize="none" spellcheck="false" placeholder="Email address or phone number" maxlength="254">
+                        </div>
+                        <div class="form-group">
                             <label for="childName">Child’s name</label>
                             <input type="text" id="childName" name="childName" required placeholder="Your little hero’s name" maxlength="120">
                         </div>
@@ -116,7 +121,7 @@
                         <p id="successMessage">Thanks for letting us know.</p>
                         <a href="mailto:alikiandgeorge@gmail.com">Need to change your answer? Email us.</a>
                     </div>
-                    <noscript><p class="form-error">To RSVP, please <a href="mailto:alikiandgeorge@gmail.com">email us</a> with your names, attendance, and total number of guests.</p></noscript>
+                    <noscript><p class="form-error">To RSVP, please <a href="mailto:alikiandgeorge@gmail.com">email us</a> with your names, email or phone number, attendance, and total number of guests.</p></noscript>
                 </div>
             </div>
         </section>
@@ -139,6 +144,6 @@
             <p>Questions? <a href="mailto:alikiandgeorge@gmail.com">Email Aliki &amp; George</a></p>
         </div>
     </footer>
-    <script src="script.js?v=612691d409cd"></script>
+    <script src="script.js?v=c2afba8a79a0"></script>
 </body>
 </html>
